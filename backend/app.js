@@ -23,9 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const signUpRouter = require('./routes/signUp');
 const loginRouter = require('./routes/login');
+const postsRouter = require('./routes/posts');
 
 app.use('/sign-up', signUpRouter);
 app.use('/login', loginRouter);
+app.use('/posts', passport.authenticate('jwt', { session: false }), postsRouter);
 
 app.get('/', (req, res) => {
   res.send('Blog Project');
