@@ -3,11 +3,12 @@ const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const Post = require('../models/Post');
 const { isAdmin } = require('../middleware/auth');
+const Comment = require('../models/Comment');
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  Post.find().limit(8).exec((err, posts) => {
+  Post.find({}, '-__v').limit(8).populate({ path: 'author', select: 'firstName lastName' }).exec((err, posts) => {
     if (err) {
       next(err);
       return;
@@ -49,13 +50,36 @@ router.post('/', [
 
 router.get('/:postId', (req, res, next) => {
   const { postId } = req.params;
-  Post.findById(postId, (err, post) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.json(post);
-  });
+  Post.findById(postId, '-__v')
+    .populate({ path: 'author', select: 'firstName lastName' })
+    .exec((err, post) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      if (!post) {
+        next({
+          status: 404,
+          msg: '404 Not Found',
+        });
+        return;
+      }
+      Comment
+        .find({ post: post._id }, '-__v -post')
+        .populate({
+          path: 'author',
+          select: 'firstName lastName',
+        })
+        .exec((err, comments) => {
+          if (err) {
+            next(err);
+            return;
+          }
+          const postResponse = post.toJSON();
+          postResponse.comments = comments;
+          res.json(postResponse);
+        });
+    });
 });
 
 router.put('/:postId', [
