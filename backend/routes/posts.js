@@ -7,6 +7,10 @@ const Comment = require('../models/Comment');
 
 const router = express.Router();
 
+const commentsRouter = require('./comments');
+
+router.use('/:postId/comments', commentsRouter);
+
 router.get('/', (req, res, next) => {
   Post.find({}, '-__v').limit(8).populate({ path: 'author', select: 'firstName lastName' }).exec((err, posts) => {
     if (err) {
