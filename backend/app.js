@@ -27,7 +27,7 @@ const postsRouter = require('./routes/posts');
 
 app.use('/sign-up', signUpRouter);
 app.use('/login', loginRouter);
-app.use('/posts', passport.authenticate('jwt', { session: false }), postsRouter);
+app.use('/posts', postsRouter);
 
 app.get('/', (req, res) => {
   res.send('Blog Project');
