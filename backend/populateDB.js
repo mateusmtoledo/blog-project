@@ -80,7 +80,6 @@ function savePosts(users, cb) {
 
 function createComment(authorId, postId) {
   return ({
-    title: 'Lorem ipsum',
     text: getParagraphs(1),
     author: authorId,
     post: postId,
