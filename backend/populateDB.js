@@ -78,11 +78,12 @@ function savePosts(users, cb) {
   );
 }
 
-function createComment(authorId) {
+function createComment(authorId, postId) {
   return ({
     title: 'Lorem ipsum',
     text: getParagraphs(1),
     author: authorId,
+    post: postId,
   });
 }
 
@@ -91,10 +92,8 @@ function saveComments({ users, posts }) {
   posts.forEach((post) => {
     for (let i = 0; i < 5; i += 1) {
       const randomAuthorId = nonAdminUsers[Math.floor(Math.random() * nonAdminUsers.length)]._id;
-      const comment = createComment(randomAuthorId);
-      new Comment(comment).save((err, comment) => {
-        Post.findByIdAndUpdate(post._id, { $push: { comments: comment._id } }).exec();
-      });
+      const comment = createComment(randomAuthorId, post._id);
+      new Comment(comment).save();
     }
   });
 }
