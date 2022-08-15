@@ -1,11 +1,11 @@
-import Posts from "./components/Posts";
 import Header from "./components/Header";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-    <Header />
-    <Posts />
+      <Header />
+      <Outlet />
     </>
   );
 }
