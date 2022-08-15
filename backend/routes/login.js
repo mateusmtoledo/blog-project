@@ -28,7 +28,14 @@ router.post('/', (req, res, next) => {
           next(err);
           return;
         }
-        res.json(token);
+        const userResponse = { ...user };
+        delete userResponse.password;
+        delete userResponse.__v;
+
+        res.json({
+          user: userResponse,
+          token,
+        });
       });
     });
   })(req, res);
