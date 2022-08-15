@@ -1,7 +1,7 @@
 function PostOverview({ post }) {
   return (
     <div>
-      <h2>{post.title}</h2>
+      <h3>{post.title}</h3>
       <p>{post.text}</p>
     </div>
   );
