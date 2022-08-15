@@ -2,8 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 require('./services/passport');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors({
+  origin: process.env.ORIGIN,
+}));
 
 const mongoose = require('mongoose');
 
@@ -46,8 +51,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json(err);
 });
 
-app.listen('3000', () => {
-  console.log('Listening on port 3000');
+app.listen('3001', () => {
+  console.log('Listening on port 3001');
 });
 
 module.exports = app;
