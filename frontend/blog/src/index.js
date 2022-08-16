@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import Posts from './components/Posts';
 import Login from './components/Login';
+import Post from './components/Post';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<Posts />} />
+          <Route path=':postId' element={<Post />} />
           <Route path='login' element={<Login />} />
         </Route>
       </Routes>
