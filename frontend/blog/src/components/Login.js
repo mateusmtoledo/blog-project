@@ -8,15 +8,21 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setUser } = useContext(UserContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   
   async function submitLogin(event) {
     event.preventDefault();
-    const response = await api.post('/login', {username, password});
-    const { data } = response;
-    localStorage.setItem('token', data.token);
-    setUser(data.user);
-    navigate('/');
+    try {
+      const response = await api.post('/login', {username, password});
+      const { data } = response;
+      localStorage.setItem('token', data.token);
+      setUser(data.user);
+      navigate('/');
+    } catch(err) {
+      const errorMessage = err.response.data.msg || err.message;
+      setError(errorMessage);
+    }
   }
 
   return (
@@ -43,6 +49,11 @@ function Login() {
         />
       </p>
       <button>Submit</button>
+      {
+        error
+        ? <p>{error}</p>
+        : null
+      } 
     </form>
   );
 }
