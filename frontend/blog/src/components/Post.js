@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../api";
+import Comment from "./Comment";
 
 function Post() {
   const params = useParams();
@@ -33,6 +34,22 @@ function Post() {
                 <p key={i}>{paragraph}</p>
               ))
             }
+
+            <div>
+              {
+                post.comments.length
+                ? <>
+                  <h4>Comments</h4>
+                  {
+                    post.comments.map((comment) =>
+                      <Comment key={comment._id} comment={comment} />
+                    )
+                  }
+                  </>
+                : <p>No comments in this post.</p>
+              }
+            </div>
+            
           </>
         : <p>Post not found</p>
       }
