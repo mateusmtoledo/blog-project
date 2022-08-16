@@ -12,7 +12,7 @@ const commentsRouter = require('./comments');
 router.use('/:postId/comments', commentsRouter);
 
 router.get('/', (req, res, next) => {
-  Post.find({}, '-__v').limit(8).populate({ path: 'author', select: 'firstName lastName' }).exec((err, posts) => {
+  Post.find({}, '-__v').limit(8).populate({ path: 'author', select: '-username -password -__v' }).exec((err, posts) => {
     if (err) {
       next(err);
       return;
@@ -55,7 +55,7 @@ router.post('/', [
 router.get('/:postId', (req, res, next) => {
   const { postId } = req.params;
   Post.findById(postId, '-__v')
-    .populate({ path: 'author', select: 'firstName lastName' })
+    .populate({ path: 'author', select: '-username -password -__v' })
     .exec((err, post) => {
       if (err) {
         next(err);
@@ -72,7 +72,7 @@ router.get('/:postId', (req, res, next) => {
         .find({ post: post._id }, '-__v -post')
         .populate({
           path: 'author',
-          select: 'firstName lastName',
+          select: '-username -password -__v',
         })
         .exec((err, comments) => {
           if (err) {

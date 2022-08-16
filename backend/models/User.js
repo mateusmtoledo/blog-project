@@ -8,4 +8,10 @@ const UserSchema = new mongoose.Schema({
   admin: { type: Boolean, required: true, default: false },
 });
 
+UserSchema.virtual('fullName').get(function getName() {
+  return `${this.firstName} ${this.lastName}`;
+});
+
+UserSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model('User', UserSchema);
