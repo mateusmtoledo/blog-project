@@ -58,7 +58,7 @@ function getParagraphs(numberOfParagraphs) {
 function createPost() {
   return ({
     title: 'Lorem ipsum dolor sit amet',
-    text: getParagraphs(Math.floor(Math.random()) * 10 + 1),
+    text: getParagraphs(Math.floor(Math.random() * 10) + 1),
   });
 }
 
