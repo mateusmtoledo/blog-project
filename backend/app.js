@@ -29,10 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 const signUpRouter = require('./routes/signUp');
 const loginRouter = require('./routes/login');
 const postsRouter = require('./routes/posts');
+const userdataRouter = require('./routes/userdata');
 
 app.use('/sign-up', signUpRouter);
 app.use('/login', loginRouter);
 app.use('/posts', postsRouter);
+app.use('/userdata', passport.authenticate('jwt', { session: false }), userdataRouter);
 
 app.get('/', (req, res) => {
   res.send('Blog Project');
