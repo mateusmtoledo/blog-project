@@ -5,6 +5,8 @@ function PostOverview({ post }) {
     <div>
       <Link to={`/${post._id}`}>
         <h3>{post.title}</h3>
+        <p>Posted by <strong>{post.author.fullName}</strong></p>
+        <p>{new Date(post.date).toLocaleString('en-US')}</p>
       </Link>
       {
         post.text.split('\n').map((paragraph, i) => (

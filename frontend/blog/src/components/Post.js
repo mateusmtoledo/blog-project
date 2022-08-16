@@ -26,13 +26,13 @@ function Post() {
         post
         ? <>
             <h3>{post.title}</h3>
+            <p>Posted by <strong>{post.author.fullName}</strong></p>
+            <p>{new Date(post.date).toLocaleString('en-US')}</p>
             {
               post.text.split('\n').map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))
             }
-            <p>Posted by <strong>{post.author.firstName}</strong></p>
-            <p>{new Date(post.date).toLocaleString('en-US')}</p>
           </>
         : <p>Post not found</p>
       }
