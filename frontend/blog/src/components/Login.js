@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
+import { UserContext } from "./UserContext";
 
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  
   async function submitLogin(event) {
     event.preventDefault();
     const response = await api.post('/login', {username, password});
-    localStorage.setItem('token', response.data);
+    const { data } = response;
+    localStorage.setItem('token', data.token);
+    setUser(data.user);
+    navigate('/');
   }
 
   return (
