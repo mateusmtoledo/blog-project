@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../api";
 
 function Post() {
@@ -26,12 +26,17 @@ function Post() {
         post
         ? <>
             <h3>{post.title}</h3>
-            <p>{post.text}</p>
+            {
+              post.text.split('\n').map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))
+            }
             <p>Posted by <strong>{post.author.firstName}</strong></p>
             <p>{new Date(post.date).toLocaleString('en-US')}</p>
           </>
         : <p>Post not found</p>
       }
+      <Link to="/">Go back</Link>
     </div>
   );
 }

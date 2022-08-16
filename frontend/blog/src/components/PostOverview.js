@@ -6,7 +6,11 @@ function PostOverview({ post }) {
       <Link to={`/${post._id}`}>
         <h3>{post.title}</h3>
       </Link>
-      <p>{post.text}</p>
+      {
+        post.text.split('\n').map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))
+      }
     </div>
   );
 }
