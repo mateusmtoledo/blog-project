@@ -7,7 +7,7 @@ import { UserContext } from "./UserContext";
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setUser } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   
@@ -15,13 +15,11 @@ function Login() {
     event.preventDefault();
     try {
       const response = await api.post('/login', {username, password});
-      const { data } = response;
-      localStorage.setItem('token', data.token);
-      setUser(data.user);
+      localStorage.setItem('token', response.data.token);
+      login();
       navigate('/');
     } catch(err) {
-      const errorMessage = err.response.data.msg || err.message;
-      setError(errorMessage);
+      setError(err.response.data.msg || err.message);
     }
   }
 

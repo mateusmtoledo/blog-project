@@ -7,25 +7,33 @@ import api from "./api";
 function App() {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    async function getUser() {
-      if(localStorage.getItem('token')) {
-        try {
-          const response = await api.get('/userdata');
-          const { data } = response;
-          setUser(data.user);
-        } catch(err) {
-          localStorage.setItem('token', '');
-          console.log(err);
-        }
+  async function login() {
+    if(localStorage.getItem('token')) {
+      try {
+        const response = await api.get('/userdata');
+        const { data } = response;
+        setUser(data.user);
+      } catch(err) {
+        localStorage.removeItem('token');
+        console.log(err);
       }
     }
-    getUser();
+  }
+
+  function logout() {
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+      setUser(null);
+    }
+  }
+
+  useEffect(() => {
+    login();
   }, []);
 
   return (
     <>
-      <UserContext.Provider value={{user, setUser}}>
+      <UserContext.Provider value={{user, login, logout}}>
         <Header />
         <Outlet />
       </UserContext.Provider>
