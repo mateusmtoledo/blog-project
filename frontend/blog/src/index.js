@@ -9,6 +9,7 @@ import {
 import Posts from './components/Posts';
 import Login from './components/Login';
 import Post from './components/Post';
+import SignUp from './components/SignUp';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,7 @@ root.render(
           <Route index element={<Posts />} />
           <Route path=':postId' element={<Post />} />
           <Route path='login' element={<Login />} />
+          <Route path='sign-up' element={<SignUp />} />
         </Route>
       </Routes>
     </BrowserRouter>
