@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <header>
-      <h1>blog app</h1>
+      <Link to="/"><h1>blog app</h1></Link>
       {
         user
         ? <div>
