@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../api";
 import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 
 function Post() {
   const params = useParams();
@@ -50,6 +51,7 @@ function Post() {
               }
             </div>
             
+            <CommentForm postId={postId} />
           </>
         : <p>Post not found</p>
       }
