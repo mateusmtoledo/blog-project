@@ -14,6 +14,7 @@ passport.use(
       }
       if (!user) {
         cb(null, false, { message: 'Wrong credentials' });
+        return;
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (err) {
